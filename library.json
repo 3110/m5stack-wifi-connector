@@ -1,0 +1,73 @@
+{
+    "name": "M5Stack-WiFi-Connector",
+    "version": "0.0.1",
+    "description": "A WiFi connection management library for M5Stack devices that simplifies the process of connecting to WiFi networks and managing credentials",
+    "keywords": "m5stack, wifi, connectivity, credentials, setup, m5unified",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/3110/m5stack-wifi-connector.git"
+    },
+    "authors": [
+        {
+            "name": "SAITO Tetsuya",
+            "email": "saito.tetsuya+github@gmail.com",
+            "url": "https://saitotetsuya.notion.site/",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/3110/m5stack-wifi-connector",
+    "dependencies": {
+        "m5stack/M5Unified": "^0.2.5"
+    },
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif32"
+    ],
+    "headers": [
+        "setup/JSONCredentialSetup.hpp",
+        "setup/ManualCredentialSetup.hpp",
+        "setup/SerialConsoleSetup.hpp",
+        "setup/SmartConfigSetup.hpp",
+        "setup/StoredCredential.hpp",
+        "setup/WiFiSetupMethod.hpp",
+        "WiFiConnector.hpp"
+    ],
+    "examples": [
+        {
+            "name": "Example for Advanced Setup",
+            "base": "examples/advanced_setup",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "Example for Basic Setup",
+            "base": "examples/basic_setup",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "Example for JSON Setup",
+            "base": "examples/json_setup",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "Example for Serial Setup",
+            "base": "examples/serial_setup",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "Example for SmartConfig Setup",
+            "base": "examples/smart_config_setup",
+            "files": [
+                "main.cpp"
+            ]
+        }
+    ]
+}
