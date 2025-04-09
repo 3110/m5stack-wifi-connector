@@ -36,21 +36,14 @@ WiFiの接続情報の設定方法は`setup`フォルダにある`WiFiSetupMetho
 
 #include "WiFiConnector.hpp"
 
-#ifdef DEBUG
-#define M5_LOG_LEVEL esp_log_level_t::ESP_LOG_DEBUG
-#else
-#define M5_LOG_LEVEL esp_log_level_t::ESP_LOG_INFO
-#endif
-
 WiFiConnector connector;
 
 void setup(void) {
-    auto cfg = M5.config();
-    cfg.serial_baudrate = 115200;
-    M5.begin(cfg);
+    M5.begin();
 
-    M5.Log.setLogLevel(m5::log_target_serial, M5_LOG_LEVEL);
-
+    // 以下を実行したのと同じ挙動になる
+    // connector.addSetupMethod(new StoredCredentialSetup());
+    
     if (!connector.begin()) {
         M5_LOGE("Failed to Connedt to WiFi");
     }
@@ -142,7 +135,6 @@ void onDisconnected(void) {
 
 void setup() {
     M5.begin();
-    Serial.begin(115200);
     
     connector.setConnectingCallback(onConnecting);
     connector.setConnectedCallback(onConnected);
@@ -200,7 +192,7 @@ connector.addSetupMethod(new ManualCredentialSetup("SSID", "パスワード"));
 以下の例ではLittleFS上にある`wifi.json`からWiFi設定を読み込みます。
 
 ```cpp
-connector.addSetupMethod(new JsonCredentialSetup(LittleFS, "/wifi.json"));
+connector.addSetupMethod(new JSONCredentialSetup(LittleFS, "/wifi.json"));
 ```
 
 `wifi.json`:
@@ -217,7 +209,7 @@ connector.addSetupMethod(new JsonCredentialSetup(LittleFS, "/wifi.json"));
 
 ## サンプルコード
 
-examplesディレクトリに以下のサンプルが含まれています：
+`examples`フォルダに以下のサンプルが含まれています：
 
 - `advanced_setup` - 複数の接続方法の組み合わせ
 - `basic_setup` - 基本的な使い方
