@@ -203,7 +203,7 @@ connector.addSetupMethod(new JSONCredentialSetup(LittleFS, "/wifi.json"));
 }
 ```
 
-### `SmartConfigSetup`: SmartConfig
+### `SmartConfigSetup`: SmartConfigによる設定
 
 スマートフォンのESP Touchアプリを使用して設定します。
 
