@@ -185,7 +185,7 @@ Password:
 connector.addSetupMethod(new ManualCredentialSetup("SSID", "パスワード"));
 ```
 
-### `JsonCredentialSetup`: 指定したファイルシステムにあるJSONファイルで設定
+### `JSONCredentialSetup`: 指定したファイルシステムにあるJSONファイルで設定
 
 指定したファイルシステムに置かれたJSONファイルからWiFi設定を読み込みます。
 
@@ -198,7 +198,7 @@ connector.addSetupMethod(new JSONCredentialSetup(LittleFS, "/wifi.json"));
 `wifi.json`:
 ```json
 {
-  "ssid": "SSID名",
+  "ssid": "SSID",
   "password": "パスワード"
 }
 ```
