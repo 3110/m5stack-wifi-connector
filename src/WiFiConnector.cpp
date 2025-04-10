@@ -6,10 +6,13 @@ static const char* NOT_CONNECTED = "Not connected";
 
 WiFiConnector::WiFiConnector(void)
     : _connected(false),
+      _setupMethodCount(0),
+      _connectionTimeout(0),
+      _connectionDelay(0),
+      _connectionRetryInterval(0),
       _connectingCallback(nullptr),
       _connectedCallback(nullptr),
-      _disconnectedCallback(nullptr),
-      _setupMethodCount(0) {
+      _disconnectedCallback(nullptr) {
     for (size_t i = 0; i < MAX_SETUP_METHODS; i++) {
         this->_setupMethods[i] = nullptr;
     }
@@ -44,16 +47,21 @@ bool WiFiConnector::addSetupMethod(WiFiSetupMethod* method) {
     }
 }
 
-bool WiFiConnector::begin(void) {
+bool WiFiConnector::begin(unsigned long connectionTimeout,
+                          unsigned long connectionDelay,
+                          unsigned long connectionRetryInterval) {
     if (this->_setupMethodCount == 0) {
         log_w("No setup methods fouud.");
         log_w("Adding default setup method: StoredCredentialSetup");
         addSetupMethod(new StoredCredentialSetup());
     }
+    this->_connectionTimeout = connectionTimeout;
+    this->_connectionDelay = connectionDelay;
+    this->_connectionRetryInterval = connectionRetryInterval;
 
     WiFi.disconnect(true);
     WiFi.mode(WIFI_STA);
-    delay(CONNECTION_DELAY_MS);
+    delay(this->_connectionDelay);
 
     WiFiSetupMethod* method = nullptr;
     const char* name = nullptr;
@@ -93,8 +101,8 @@ bool WiFiConnector::waitConnection(void) {
     const unsigned long startTime = millis();
     unsigned long retries = 0;
     while (WiFi.status() != WL_CONNECTED &&
-           millis() - startTime < CONNECTION_TIMEOUT_MS) {
-        delay(CONNECTION_RETRY_INTERVAL_MS);
+           millis() - startTime < this->_connectionTimeout) {
+        delay(this->_connectionRetryInterval);
         if (WiFi.status() == WL_NO_SSID_AVAIL) {
             log_e("SSID is not available");
             break;

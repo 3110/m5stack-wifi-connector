@@ -20,7 +20,11 @@ public:
 
     virtual bool addSetupMethod(WiFiSetupMethod* method);
 
-    virtual bool begin(void);
+    virtual bool begin(
+        unsigned long connectionTimeout = CONNECTION_TIMEOUT_MS,
+        unsigned long connectionDelay = CONNECTION_DELAY_MS,
+        unsigned long connectionRetryInterval = CONNECTION_RETRY_INTERVAL_MS);
+
     virtual void setConnectingCallback(ConnectingCallback callback);
     virtual void setConnectedCallback(ConnectedCallback callback);
     virtual void setDisconnectedCallback(DisconnectedCallback callback);
@@ -38,6 +42,9 @@ private:
     bool _connected;
     WiFiSetupMethod* _setupMethods[MAX_SETUP_METHODS];
     size_t _setupMethodCount;
+    unsigned long _connectionTimeout;
+    unsigned long _connectionDelay;
+    unsigned long _connectionRetryInterval;
     ConnectingCallback _connectingCallback;
     ConnectedCallback _connectedCallback;
     DisconnectedCallback _disconnectedCallback;
