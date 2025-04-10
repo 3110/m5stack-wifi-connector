@@ -18,7 +18,8 @@
     "license": "MIT",
     "homepage": "https://github.com/3110/m5stack-wifi-connector",
     "dependencies": {
-        "m5stack/M5Unified": "^0.2.5"
+        "m5stack/M5Unified": "^0.2.5",
+        "Arduino_JSON": "^0.2.0"
     },
     "frameworks": "arduino",
     "platforms": [
